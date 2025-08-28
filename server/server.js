@@ -18,10 +18,11 @@ mongoose.connect(process.env.MONGO_URI)
 // =========================
 // Middleware
 // =========================
-app.use(cors({
-  origin: 'https://web-development-project-gxnx.onrender.com',
+app.options('*', cors({
+  origin: 'https://excelalalytics.netlify.app',
   credentials: true
 }));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(bodyParser.json({ limit: '10mb' }));
 
