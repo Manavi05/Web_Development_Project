@@ -12,3 +12,7 @@ const excelDataSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('ExcelData', excelDataSchema);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5237fcee738710c1eff4153d50df0accd785fb62
