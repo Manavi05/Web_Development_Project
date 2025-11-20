@@ -17,8 +17,12 @@ function Login() {
 
     // ✅ Simulate login success
     if (form.email && form.password) {
-      localStorage.setItem('isLoggedIn', 'true');
-      navigate('/upload'); // redirect after login
+      useEffect(() => {
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    navigate('/upload');
+  }
+}, []);
+
     } else {
       alert("Please enter valid credentials");
     }

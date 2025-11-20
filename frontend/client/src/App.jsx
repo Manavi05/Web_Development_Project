@@ -1,20 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
 import React from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import UploadExcel from './components/UploadExcel';
 import ParseExcel from './components/ParseExcel';
-import WelcomePage from './components/WelcomePage';
+import ChartVisualizer from './components/ChartVisualizer';
+import History from './components/History';
+import AdminDashboard from './components/AdminDashboard';
 import './App.css';
+
+function WelcomePage() {
+  return (
+    <div className="welcome-page">
+      <h2>👋 Welcome to Excel Analytics</h2>
+      <p>Select an action from above to begin.</p>
+    </div>
+  );
+}
 
 function App() {
   const location = useLocation();
   const hideNav = location.pathname === "/login" || location.pathname === "/register";
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  
 
   return (
     <div>
@@ -23,22 +31,16 @@ function App() {
       {!hideNav && isLoggedIn && (
         <nav className="navbar">
           <Link to="/upload">📤 Upload Excel</Link>
+          <Link to="/history">📁 View History</Link>
+          <Link to="/chart">📈 Visualize</Link>
           <button
-            style={{
-              marginLeft: "20px",
-              padding: "6px 14px",
-              backgroundColor: "#dc3545",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer"
-            }}
+            className="logout-btn"
             onClick={() => {
               localStorage.removeItem('isLoggedIn');
-              window.location.href = '/'; // force refresh
+              window.location.href = '/';
             }}
           >
-            Logout
+            🚪 Logout
           </button>
         </nav>
       )}
@@ -49,6 +51,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/upload" element={<UploadExcel />} />
         <Route path="/parse" element={<ParseExcel />} />
+        <Route path="/chart" element={
+          <ChartVisualizer parsedData={JSON.parse(localStorage.getItem('parsedData')) || []} />
+        } />
+        <Route path="/history" element={<History />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </div>
